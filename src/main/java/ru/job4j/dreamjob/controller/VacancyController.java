@@ -10,7 +10,7 @@ import ru.job4j.dreamjob.repository.VacancyRepository;
 @Controller
 @RequestMapping("/vacancies")
 public class VacancyController {
-    private static final VacancyRepository vacancyRepository = MemoryVacancyRepository.getInstance();
+    private final VacancyRepository vacancyRepository = MemoryVacancyRepository.getInstance();
 
     @GetMapping
     public String getAll(Model model) {
