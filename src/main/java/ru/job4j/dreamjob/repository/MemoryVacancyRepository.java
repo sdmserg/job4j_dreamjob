@@ -1,0 +1,63 @@
+package ru.job4j.dreamjob.repository;
+
+import org.springframework.beans.factory.xml.DelegatingEntityResolver;
+import ru.job4j.dreamjob.model.Vacancy;
+
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+public class MemoryVacancyRepository implements VacancyRepository {
+    private static final MemoryVacancyRepository INSTANCE = new MemoryVacancyRepository();
+
+    private int nextId = 1;
+
+    private final Map<Integer, Vacancy> vacancies = new HashMap<>();
+
+    private MemoryVacancyRepository() {
+        save(new Vacancy(0, "Intern Java Developer", "Ищем стажера Java"));
+        save(new Vacancy(0, "Junior Java Developer", "Ищем Junior Java"));
+        save(new Vacancy(0, "Junior+ Java Developer", "Ищем Junior+ Java"));
+        save(new Vacancy(0, "Middle Java Developer", "Ищем Middle Java"));
+        save(new Vacancy(0, "Middle+ Java Developer", "Ищем Middle+ Java"));
+        save(new Vacancy(0, "Senior Java Developer", "Ищем Senior Java"));
+    }
+
+    public static MemoryVacancyRepository getInstance() {
+        return INSTANCE;
+    }
+
+    @Override
+    public Vacancy save(Vacancy vacancy) {
+        vacancy.setId(nextId++);
+        vacancies.put(vacancy.getId(), vacancy);
+        return vacancy;
+    }
+
+    @Override
+    public void deleteById(int id) {
+        vacancies.remove(id);
+    }
+
+    @Override
+    public boolean update(Vacancy vacancy) {
+        return vacancies.computeIfPresent(vacancy.getId(),
+                (id, oldvacancy) -> new Vacancy(
+                        oldvacancy.getId(),
+                        vacancy.getTitle(),
+                        vacancy.getDescription()
+                )
+        ) != null;
+    }
+
+    @Override
+    public Optional<Vacancy> findById(int id) {
+        return Optional.ofNullable(vacancies.get(id));
+    }
+
+    @Override
+    public Collection<Vacancy> findAll() {
+        return vacancies.values();
+    }
+}
