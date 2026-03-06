@@ -1,6 +1,5 @@
 package ru.job4j.dreamjob.repository;
 
-import org.springframework.beans.factory.xml.DelegatingEntityResolver;
 import ru.job4j.dreamjob.model.Vacancy;
 
 import java.util.Collection;
