@@ -7,7 +7,7 @@ public class Candidate {
     private int id;
     private String name;
     private String description;
-    LocalDateTime creationDate = LocalDateTime.now()
+    private LocalDateTime creationDate = LocalDateTime.now()
             .withNano(0)
             .withSecond(0);
 
