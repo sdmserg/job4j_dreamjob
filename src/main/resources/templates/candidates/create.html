@@ -4,15 +4,15 @@
 <body>
 <div th:replace="fragments/navigation :: navigation"></div>
 <div class="container">
-    <form class="mt-3">
+    <form class="mt-3" th:action="@{/candidates/create}" method="post">
         <div class="mb-3">
-            <label for="title" class="form-label"><b>Должность</b></label>
-            <input type="text" class="form-control" id="title"
-                   placeholder="Укажите должность, например, Java-разработчик">
+            <label for="name" class="form-label"><b>Имя кандидата</b></label>
+            <input type="text" class="form-control" name="name" id="name"
+                   placeholder="Укажите ваше имя">
         </div>
         <div class="mb-3">
             <label for="description" class="form-label"><b>Опыт работы и навыки</b></label>
-            <textarea class="form-control" id="description" rows="25"
+            <textarea class="form-control" name="description" id="description" rows="25"
                       placeholder="Укажите свой опыт работы, ключевые навыки и достижения"></textarea>
         </div>
         <div class="mb-3 row">
@@ -20,7 +20,7 @@
             <div class="col-6">
                 <div class="row">
                     <div class="col-6"><a class="btn btn-danger w-100"
-                                          th:href="@{/vacancies}">Отмена</a></div>
+                                          th:href="@{/candidates/list}">Отмена</a></div>
                     <div class="col-6"><button class="btn btn-primary w-100"
                                                type="submit">Сохранить</button>
                     </div>

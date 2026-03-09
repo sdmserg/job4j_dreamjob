@@ -1,5 +1,7 @@
 package ru.job4j.dreamjob.model;
 
+import ru.job4j.dreamjob.repository.CandidateRepository;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -15,6 +17,9 @@ public class Candidate {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    public Candidate() {
     }
 
     public int getId() {
@@ -37,12 +42,16 @@ public class Candidate {
         return description;
     }
 
-    public void setDescription() {
+    public void setDescription(String description) {
         this.description = description;
     }
 
     public LocalDateTime getCreationDate() {
         return creationDate;
+    }
+
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     @Override
