@@ -25,11 +25,9 @@ public class VacancyController {
     }
 
     @PostMapping("/create")
-    public String create(HttpServletRequest req) {
-        var title = req.getParameter("title");
-        var description = req.getParameter("description");
-        vacancyRepository.save(new Vacancy(0, title, description));
-        return "redirect:/vacancies";
+    public String create(@ModelAttribute Vacancy vacancy) {
+        vacancyRepository.save(vacancy);
+        return "redirect:/vacancies/list";
     }
 
     @GetMapping("/{id}")
