@@ -52,7 +52,7 @@ public class CandidateController {
 
     @GetMapping("/delete/{id}")
     public String delete(Model model, @PathVariable int id) {
-        boolean isDeleted = candidateRepository.delete(id);
+        boolean isDeleted = candidateRepository.deleteById(id);
         if (!isDeleted) {
             model.addAttribute("message", "Резюме с указанным идентификатором не найдена");
             return "errors/404";
