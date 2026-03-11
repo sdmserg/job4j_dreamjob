@@ -9,21 +9,16 @@ import java.util.Optional;
 
 @Repository
 public class MemoryCandidateRepository implements CandidateRepository {
-    private static final MemoryCandidateRepository INSTANCE = new MemoryCandidateRepository();
 
     private int nextId = 1;
 
     private final HashMap<Integer, Candidate> candidates = new HashMap<>();
 
-    private MemoryCandidateRepository() {
+    public MemoryCandidateRepository() {
         save(new Candidate(0, "Igor Petrov", "Java Developer"));
         save(new Candidate(0, "Nikita Popov", "Python Developer"));
         save(new Candidate(0, "Pavel Ivanov", "Golang Developer"));
         save(new Candidate(0, "Sergei Kirov", "Support Engineer"));
-    }
-
-    public static MemoryCandidateRepository getInstance() {
-        return INSTANCE;
     }
 
     @Override
