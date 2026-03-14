@@ -11,15 +11,17 @@ public class Vacancy {
             .withSecond(0)
             .withNano(0);
     private boolean visible;
+    private int cityId;
 
     public Vacancy() {
     }
 
-    public Vacancy(int id, String title, String description, boolean visible) {
+    public Vacancy(int id, String title, String description, boolean visible, int cityId) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.visible = visible;
+        this.cityId = cityId;
     }
 
     public int getId() {
@@ -60,6 +62,14 @@ public class Vacancy {
 
     public void setVisible(boolean visible) {
         this.visible = visible;
+    }
+
+    public int getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(int cityId) {
+        this.cityId = cityId;
     }
 
     @Override
