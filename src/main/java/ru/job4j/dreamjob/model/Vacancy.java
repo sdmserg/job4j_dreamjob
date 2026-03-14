@@ -10,14 +10,16 @@ public class Vacancy {
     private LocalDateTime creationDate = LocalDateTime.now()
             .withSecond(0)
             .withNano(0);
+    private boolean visible;
 
     public Vacancy() {
     }
 
-    public Vacancy(int id, String title, String description) {
+    public Vacancy(int id, String title, String description, boolean visible) {
         this.id = id;
         this.title = title;
         this.description = description;
+        this.visible = visible;
     }
 
     public int getId() {
@@ -50,6 +52,14 @@ public class Vacancy {
 
     public void setCreationDate(LocalDateTime creationDate) {
         this.creationDate = creationDate;
+    }
+
+    public boolean getVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     @Override
