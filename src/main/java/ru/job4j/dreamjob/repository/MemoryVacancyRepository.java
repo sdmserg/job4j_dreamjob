@@ -5,7 +5,6 @@ import org.springframework.stereotype.Repository;
 import ru.job4j.dreamjob.model.Vacancy;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
@@ -20,12 +19,12 @@ public class MemoryVacancyRepository implements VacancyRepository {
     private final Map<Integer, Vacancy> vacancies = new ConcurrentHashMap<>();
 
     public MemoryVacancyRepository() {
-        save(new Vacancy(0, "Intern Java Developer", "Ищем стажера Java", true, 1));
-        save(new Vacancy(0, "Junior Java Developer", "Ищем Junior Java", true, 2));
-        save(new Vacancy(0, "Junior+ Java Developer", "Ищем Junior+ Java", true, 3));
-        save(new Vacancy(0, "Middle Java Developer", "Ищем Middle Java", true, 1));
-        save(new Vacancy(0, "Middle+ Java Developer", "Ищем Middle+ Java", true, 2));
-        save(new Vacancy(0, "Senior Java Developer", "Ищем Senior Java", true, 1));
+        save(new Vacancy(0, "Intern Java Developer", "Ищем стажера Java", true, 1, 0));
+        save(new Vacancy(0, "Junior Java Developer", "Ищем Junior Java", true, 2, 0));
+        save(new Vacancy(0, "Junior+ Java Developer", "Ищем Junior+ Java", true, 3, 0));
+        save(new Vacancy(0, "Middle Java Developer", "Ищем Middle Java", true, 1, 0));
+        save(new Vacancy(0, "Middle+ Java Developer", "Ищем Middle+ Java", true, 2, 0));
+        save(new Vacancy(0, "Senior Java Developer", "Ищем Senior Java", true, 1, 0));
     }
 
     @Override
@@ -48,7 +47,8 @@ public class MemoryVacancyRepository implements VacancyRepository {
                         vacancy.getTitle(),
                         vacancy.getDescription(),
                         vacancy.getVisible(),
-                        vacancy.getCityId()
+                        vacancy.getCityId(),
+                        vacancy.getFileId()
                 )
         ) != null;
     }

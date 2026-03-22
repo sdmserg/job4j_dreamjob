@@ -4,13 +4,20 @@
 <body>
 <div th:replace="fragments/navigation :: navigation"></div>
 <div class="container">
-    <form class="mt-3" th:action="@{/candidates/update}" method="post" th:object="${candidate}">
+    <form class="mt-3" th:action="@{/candidates/update}" method="post" th:object="${candidate}" enctype="multipart/form-data">
         <input type="hidden" name="id" th:field="*{id}">
+        <input type="hidden" name="fileId" th:field="*{fileId}">
         <div class="mb-3">
             <label for="name" class="form-label"><b>Имя кандидата</b></label>
             <input type="text" class="form-control" id="name" name="name"
                    th:field="*{name}"
                    placeholder="Укажите ваше имя">
+        </div>
+        <div class="mb-3">
+            <img th:src="@{/files/{fileId}(fileId=*{fileId})}" class="w-100" alt="No image">
+        </div>
+        <div class="mb-3">
+            <input class="form-control form-control-sm w-100" type="file" id="formFile" name="file">
         </div>
         <div class="mb-3">
             <label for="description" class="form-label"><b>Опыт работы и навыки</b></label>
