@@ -1,5 +1,6 @@
 package ru.job4j.dreamjob.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import ru.job4j.dreamjob.dto.FileDto;
@@ -19,9 +20,9 @@ public class SimpleFileService implements FileService {
 
     private final String storageDirectory;
 
-    public SimpleFileService(FileRepository fileRepository,
+    public SimpleFileService(@Qualifier("sql2oFileRepository") FileRepository sql2oFileRepository,
                              @Value("${file.directory}") String storageDirectory) {
-        this.fileRepository = fileRepository;
+        this.fileRepository = sql2oFileRepository;
         this.storageDirectory = storageDirectory;
         createStorageDirectory(storageDirectory);
     }

@@ -1,6 +1,7 @@
 package ru.job4j.dreamjob.service;
 
 import net.jcip.annotations.ThreadSafe;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.job4j.dreamjob.dto.FileDto;
 import ru.job4j.dreamjob.model.File;
@@ -18,7 +19,8 @@ public class SimpleVacancyService implements VacancyService {
 
     private final FileService fileService;
 
-    public SimpleVacancyService(VacancyRepository sql2oVacancyRepository, FileService fileService) {
+    public SimpleVacancyService(@Qualifier("sql2oVacancyRepository") VacancyRepository sql2oVacancyRepository,
+                                FileService fileService) {
         this.vacancyRepository = sql2oVacancyRepository;
         this.fileService = fileService;
     }
@@ -36,11 +38,13 @@ public class SimpleVacancyService implements VacancyService {
 
     @Override
     public boolean deleteById(int id) {
-        var fileOptional = findById(id);
-        if (fileOptional.isPresent()) {
-            fileService.deleteById(fileOptional.get().getFileId());
+        var vacancyOptional = findById(id);
+        if (vacancyOptional.isPresent()) {
+            vacancyRepository.deleteById(id);
+            fileService.deleteById(vacancyOptional.get().getFileId());
+            return true;
         }
-        return vacancyRepository.deleteById(id);
+        return false;
     }
 
     @Override
