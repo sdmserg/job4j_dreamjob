@@ -2,6 +2,7 @@ package ru.job4j.dreamjob.service;
 
 import com.fasterxml.jackson.databind.EnumNamingStrategies;
 import net.jcip.annotations.ThreadSafe;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.job4j.dreamjob.dto.FileDto;
 import ru.job4j.dreamjob.model.Candidate;
@@ -19,8 +20,9 @@ public class SimpleCandidateService implements CandidateService {
 
     private final FileService fileService;
 
-    public SimpleCandidateService(CandidateRepository candidateRepository, FileService fileService) {
-        this.candidateRepository = candidateRepository;
+    public SimpleCandidateService(@Qualifier("sql2oCandidateRepository") CandidateRepository sql2oCandidateRepository,
+                                  FileService fileService) {
+        this.candidateRepository = sql2oCandidateRepository;
         this.fileService = fileService;
     }
 
