@@ -21,7 +21,7 @@ public class Sql2oVacancyRepository implements VacancyRepository {
         try (var connection = sql2o.open()) {
             var sql = """
                     INSERT INTO vacancies(title, description, creation_date, visible, city_id, file_id)
-                    VALUES(:title, :description, :creationDate, :visible, :cityId, :fileId)                    
+                    VALUES(:title, :description, :creationDate, :visible, :cityId, :fileId)
                     """;
             var query = connection.createQuery(sql, true)
                     .addParameter("title", vacancy.getTitle())
