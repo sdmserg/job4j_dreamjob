@@ -1,5 +1,6 @@
 package ru.job4j.dreamjob.repository;
 
+import org.postgresql.util.PSQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -31,8 +32,13 @@ public class Sql2oUserRepository implements UserRepository {
             user.setId(generatedId);
             return Optional.of(user);
         } catch (Sql2oException e) {
-            LOG.error("Failed to save user: {}", user, e);
-            return Optional.empty();
+            if (e.getCause() instanceof PSQLException ex
+                    && "23505".equals(ex.getSQLState())) {
+                LOG.error("Пользователь {} с email {} уже существует!", user, user.getEmail(), e);
+                return Optional.empty();
+            }
+            LOG.error("Ошибка при сохранении пользователя: {}", user, e);
+            throw e;
         }
     }
 
