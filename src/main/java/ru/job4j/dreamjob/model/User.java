@@ -66,4 +66,12 @@ public class User {
     public int hashCode() {
         return Objects.hash(email);
     }
+
+    @Override
+    public String toString() {
+        return "User{"
+                + "email='" + email + '\''
+                + ", name='" + name + '\''
+                + '}';
+    }
 }
