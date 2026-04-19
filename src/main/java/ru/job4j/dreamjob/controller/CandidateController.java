@@ -31,85 +31,50 @@ public class CandidateController {
     }
 
     @GetMapping("/list")
-    public String getAll(Model model, HttpSession session) {
-        var user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+    public String getAll(Model model) {
         model.addAttribute("candidates", candidateService.findAll());
         return "candidates/list";
     }
 
     @GetMapping("/create")
-    public String getCreationResumePage(Model model, HttpSession session) {
-        var user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute(user);
+    public String getCreationResumePage(Model model) {
         model.addAttribute("cities", cityService.findAll());
         return "candidates/create";
     }
 
     @PostMapping("/create")
-    public String create(@ModelAttribute Candidate candidate, MultipartFile file,
-                         Model model, HttpSession session) {
-        var user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
-        model.addAttribute("user", user);
+    public String create(@ModelAttribute Candidate candidate, MultipartFile file, Model model) {
         try {
             candidateService.save(candidate, new FileDto(file.getOriginalFilename(), file.getBytes()));
             return "redirect:/candidates/list";
         } catch (IOException e) {
-            model.addAttribute("user", user);
             model.addAttribute("message", e.getMessage());
             return "errors/404";
         }
     }
 
     @GetMapping("/{id}")
-    public String getById(Model model, @PathVariable int id, HttpSession session) {
-        var user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
+    public String getById(Model model, @PathVariable int id) {
         var candidateOptional = candidateService.findById(id);
         if (candidateOptional.isEmpty()) {
-            model.addAttribute("user", user);
             model.addAttribute("message", "Резюме с указанным идентификатором не найдена");
             return "errors/404";
         }
-        model.addAttribute("user", user);
         model.addAttribute("cities", cityService.findAll());
         model.addAttribute("candidate", candidateOptional.get());
         return "candidates/one";
     }
 
     @PostMapping("/update")
-    public String update(@ModelAttribute Candidate candidate, MultipartFile file,
-                         Model model, HttpSession session) {
-        var user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
+    public String update(@ModelAttribute Candidate candidate, MultipartFile file, Model model) {
         try {
             boolean isUpdated = candidateService.update(candidate, new FileDto(file.getOriginalFilename(), file.getBytes()));
             if (!isUpdated) {
-                model.addAttribute("user", user);
                 model.addAttribute("message", "Резюме с указанным идентификатором не найдена");
                 return "errors/404";
             }
             return "redirect:/candidates/list";
         } catch (IOException e) {
-            model.addAttribute("user", user);
             model.addAttribute("message", e.getMessage());
             return "errors/404";
         }
@@ -117,14 +82,8 @@ public class CandidateController {
 
     @GetMapping("/delete/{id}")
     public String delete(Model model, @PathVariable int id, HttpSession session) {
-        var user = (User) session.getAttribute("user");
-        if (user == null) {
-            user = new User();
-            user.setName("Гость");
-        }
         boolean isDeleted = candidateService.deleteById(id);
         if (!isDeleted) {
-            model.addAttribute("user", user);
             model.addAttribute("message", "Резюме с указанным идентификатором не найдена");
             return "errors/404";
         }
