@@ -25,7 +25,7 @@ public class CandidateController {
 
     private final CityService cityService;
 
-    public CandidateController(CandidateService candidateService, CityService cityService, FileService fileService) {
+    public CandidateController(CandidateService candidateService, CityService cityService) {
         this.candidateService = candidateService;
         this.cityService = cityService;
     }
@@ -47,7 +47,7 @@ public class CandidateController {
         try {
             candidateService.save(candidate, new FileDto(file.getOriginalFilename(), file.getBytes()));
             return "redirect:/candidates/list";
-        } catch (IOException e) {
+        } catch (Exception e) {
             model.addAttribute("message", e.getMessage());
             return "errors/404";
         }
@@ -70,21 +70,21 @@ public class CandidateController {
         try {
             boolean isUpdated = candidateService.update(candidate, new FileDto(file.getOriginalFilename(), file.getBytes()));
             if (!isUpdated) {
-                model.addAttribute("message", "Резюме с указанным идентификатором не найдена");
+                model.addAttribute("message", "Резюме с указанным идентификатором не найдено!");
                 return "errors/404";
             }
             return "redirect:/candidates/list";
-        } catch (IOException e) {
+        } catch (Exception e) {
             model.addAttribute("message", e.getMessage());
             return "errors/404";
         }
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(Model model, @PathVariable int id, HttpSession session) {
+    public String delete(Model model, @PathVariable int id) {
         boolean isDeleted = candidateService.deleteById(id);
         if (!isDeleted) {
-            model.addAttribute("message", "Резюме с указанным идентификатором не найдена");
+            model.addAttribute("message", "Резюме с указанным идентификатором не найдено!");
             return "errors/404";
         }
         return "redirect:/candidates/list";
